@@ -8,34 +8,39 @@ terraform {
 }
 
 provider "aws" {
-  region     = "AWS_REGION"
-  access_key = "AWS_ACCESS_KEY"
-  secret_key = "AWS_SECRET_KEY"
+  region = var.aws_region
 }
 
-// To Generate Private Key
+variable "aws_region" {
+  description = "AWS region"
+  default     = "us-east-1"  # Change this to your desired region
+}
+
+variable "key_name" {
+  description = "Name of the SSH key pair"
+  default     = "my-key"  # Change this to your desired key name
+}
+
+variable "instance_type" {
+  description = "EC2 instance type"
+  default     = "t2.micro"  # Change this to your desired instance type
+}
+
+variable "ami_id" {
+  description = "AMI ID for the desired image"
+  default     = "ami-0f5ee92e2d63afc18"  # Change this to your desired AMI
+}
+
 resource "tls_private_key" "rsa_4096" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
-variable "key_name" {
-  description = "Name of the SSH key pair"
-}
-
-// Create Key Pair for Connecting EC2 via SSH
 resource "aws_key_pair" "key_pair" {
   key_name   = var.key_name
   public_key = tls_private_key.rsa_4096.public_key_openssh
 }
 
-// Save PEM file locally
-resource "local_file" "private_key" {
-  content  = tls_private_key.rsa_4096.private_key_pem
-  filename = var.key_name
-}
-
-# Create a security group
 resource "aws_security_group" "sg_ec2" {
   name        = "sg_ec2"
   description = "Security group for EC2"
@@ -56,8 +61,8 @@ resource "aws_security_group" "sg_ec2" {
 }
 
 resource "aws_instance" "public_instance" {
-  ami                    = "ami-0f5ee92e2d63afc18"
-  instance_type          = "t2.micro"
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
   key_name               = aws_key_pair.key_pair.key_name
   vpc_security_group_ids = [aws_security_group.sg_ec2.id]
 
