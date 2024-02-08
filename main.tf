@@ -74,4 +74,10 @@ resource "aws_instance" "public_instance" {
     volume_size = 30
     volume_type = "gp2"
   }
+
+  depends_on = [
+    aws_key_pair.key_pair,
+    aws_security_group.sg_ec2,
+  ]
 }
+
