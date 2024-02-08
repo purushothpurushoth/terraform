@@ -22,7 +22,7 @@ resource "local_file" "local" {
   filename = "tfkey"
 }
 
-resource "aws_instance" "Purushoth_Terraform_Instance" {
+resource "aws_instance" "public_instance" {
   ami                    = "ami-0f5ee92e2d63afc18"
   instance_type          = "t2.micro"
   key_name               = aws_key_pair.pem_key.key_name
