@@ -22,17 +22,22 @@ resource "local_file" "local" {
   filename = "tfkey"
 }
 
-resource "aws_instance" "Purushoth_Terraform_Instance"{
+resource "aws_instance" "Purushoth_Terraform_Instance" {
   ami                    = "ami-0f5ee92e2d63afc18"
   instance_type          = "t2.micro"
   key_name               = aws_key_pair.pem_key.key_name
 
- tags = {
+  tags = {
     Name = "public_instance"
   }
 
- root_block_device {
-   volume_size = 30
-   volume_type = "gp2"
+  root_block_device {
+    volume_size = 30
+    volume_type = "gp2"
   }
+
+  depends_on = [
+    aws_key_pair.pem_key,
+    local_file.local,
+  ]
 }
