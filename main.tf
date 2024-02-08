@@ -41,3 +41,4 @@ resource "aws_instance" "Purushoth_Terraform_Instance" {
     local_file.local,
   ]
 }
+
