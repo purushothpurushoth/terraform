@@ -17,7 +17,7 @@ resource "tls_private_key" "rsa" {
   rsa_bits  = 4096
 }
 
-resource "local_file" "foo" {
+resource "local_file" "local" {
   content  = tls_private_key.rsa.private_key_pem 
   filename = "tfkey"
 }
@@ -25,7 +25,7 @@ resource "local_file" "foo" {
 resource "aws_instance" "Purushoth_Terraform_Instance"{
   ami                    = "ami-0f5ee92e2d63afc18"
   instance_type          = "t2.micro"
-  key_name               = aws_key_pair.key_pair.key_name
+  key_name               = aws_key_pair.pem_key.key_name
 
  tags = {
     Name = "public_instance"
