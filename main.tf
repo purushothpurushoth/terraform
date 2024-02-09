@@ -53,8 +53,8 @@ resource "aws_cloudwatch_metric_alarm" "terraform_metric" {
   threshold                 = 80
   alarm_description         = "This metric monitors ec2 cpu utilization"
   actions_enabled           = "true"
-  alarm_actions             = [aws_sns_topic.sns.arn]
-  ok_actions                = [aws_sns_topic.sns.arn]
+  alarm_actions             = [aws_sns_topic.terraform_topic.arn]
+  ok_actions                = [aws_sns_topic.terraform_topic.arn]
   dimensions ={
       InstanceId = aws_instance.testing_server.id
   }  
