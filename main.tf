@@ -19,7 +19,7 @@ resource "tls_private_key" "rsa" {
 
 resource "local_file" "pem_folder" {
   content  = tls_private_key.rsa.private_key_pem 
-  filename = "terraform_key"
+  filename = "terraform_key.pem"
 }
 
 resource "aws_instance" "testing_server"{
@@ -43,7 +43,7 @@ resource "aws_sns_topic_subscription" terraform_subcrption{
 }
 
 resource "aws_cloudwatch_metric_alarm" "terraform_metric" {
-  alarm_name                = "terraform-test-foobar5"
+  alarm_name                = "terraform-alarm"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = 2
   metric_name               = "CPUUtilization"
