@@ -42,3 +42,21 @@ resource "aws_sns_topic_subscription" terraform_subcrption{
   endpoint = "purushothshanmugam19@gmail.com"
 }
 
+resource "aws_cloudwatch_metric_alarm" "terraform_metric" {
+  alarm_name                = "terraform-test-foobar5"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
+  evaluation_periods        = 2
+  metric_name               = "CPUUtilization"
+  namespace                 = "AWS/EC2"
+  period                    = 120
+  statistic                 = "Average"
+  threshold                 = 80
+  alarm_description         = "This metric monitors ec2 cpu utilization"
+  actions_enabled           = "true"
+  alarm_actions             = [aws_sns_topic.sns.arn]
+  ok_actions                = [aws_sns_topic.sns.arn]
+  dimensions ={
+      InstanceId = aws_instance.testing_server.id
+  }  
+}
+
