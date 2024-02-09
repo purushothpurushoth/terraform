@@ -22,4 +22,14 @@ resource "local_file" "pem_folder" {
   filename = "terraform_key"
 }
 
+resource "aws_instance" "testing_server"{
+  ami =  "ami-0277155c3f0ab2930"
+  instance_type = "t2.micro"
+  key_name = "terraform_key"
+  tags{
+    Name = "testing_server"
+    Description = "This is a testing server"
+  }
+
+}
 
