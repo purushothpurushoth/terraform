@@ -30,10 +30,9 @@ resource "aws_instance" "testing_server"{
     Name = "testing_server"
     Description = "This is a testing server"
   }
+}
 
 resource "aws_sns_topic" "terraform_sns_topic"{
     name = "sns_topic_tf" 
-}
-
 }
 
