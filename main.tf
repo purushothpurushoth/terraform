@@ -38,7 +38,7 @@ resource "aws_sns_topic" "terraform_topic"{
 
 resource "aws_sns_topic_subscription" terraform_subcrption{
   topic_arn = aws_sns_topic.terraform_topic.arn
-  protcol = "email"
+  protocol = "email"
   endpoint = "purushothshanmugam19@gmail.com"
 }
 
